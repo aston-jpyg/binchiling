@@ -18,11 +18,16 @@ jobs:
     - name: Docker login
       run: | 
         docker login -u qiechen -p ${{ env.DHUB_PASS }}
+    
+    - name: Get version
+      run: |
+        IMAGE_TAG-$(cat info.json | jq §r '.["version"]')
+        echo "IMAGE_TAG=$IMAGE_TAG" >> $GITHUB_ENV
 
-    - name: Build Image
+    - name: Build image
       run: |
         docker build -t qiechen/binchiling:1.0 . 
 
-    - name: Push Image
+    - name: Push image
       run: |
         docker push qiechen/binchiling:1.0

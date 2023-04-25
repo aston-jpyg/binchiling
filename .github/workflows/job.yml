@@ -1,1 +1,24 @@
 name: Build Docker Image
+
+on:
+  workflow_dispatch:
+    branches:
+      - main
+
+env:
+  DHUB_PASS: ${{ secrets.DHUB_PASS }}
+
+jobs:
+  build:
+  runs-on: ubuntu-latest
+  steps:
+  - name: Get code
+    uses: actions/checkout@v2
+
+  - name: docker login
+    run: | 
+      docker login -u qiechen -p ${{ env.DHUB_PASS }}
+
+  - name: Build Image
+    run: |
+      docker build -t aston-jpyg/binchiling:1.0 . 

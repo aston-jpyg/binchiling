@@ -10,15 +10,19 @@ env:
 
 jobs:
   build:
-  runs-on: ubuntu-latest
-  steps:
-  - name: Get code
-    uses: actions/checkout@v2
+    runs-on: ubuntu-latest
+    steps:
+    - name: Get code
+      uses: actions/checkout@v2
 
-  - name: docker login
-    run: | 
-      docker login -u qiechen -p ${{ env.DHUB_PASS }}
+    - name: Docker login
+      run: | 
+        docker login -u qiechen -p ${{ env.DHUB_PASS }}
 
-  - name: Build Image
-    run: |
-      docker build -t aston-jpyg/binchiling:1.0 . 
+    - name: Build Image
+      run: |
+        docker build -t aston-jpyg/binchiling:1.0 . 
+
+    - name: Push Image
+      run: |
+        docker push aston-jpyg/binchiling:1.0
